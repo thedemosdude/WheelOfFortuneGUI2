@@ -35,7 +35,7 @@ public class SuperGame
 		player.setName(name);
 
 		System.out.println("Select the level of difficulty you would like to play, enter 1 for 'easy', enter 2 for 'normal', enter 3 for 'hard': ");
-		difficulty = scnr.nextInt(); //Perfect place to handle an exception incase user enters " easy " 
+		difficulty = scnr.nextInt(); //Perfect place to handle an exception incase user enters "easy" 
 		player.setDifficulty(difficulty); 
 				
 		// Returns the difficulty chosen
