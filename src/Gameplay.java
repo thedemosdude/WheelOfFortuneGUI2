@@ -84,26 +84,26 @@ public class Gameplay
 	 * 	If not, ends the turn.
 	 *  @param	guess	user inputted String
 	 */
-    private void trackPlayerGuess(String guess) {
-    	char guessch = Character.toLowerCase(guess.charAt(0));
-    	playerGuesses += guessch;
-		for (int i = 0; i < phrase.length(); i++) {
-    		char currentch = phrase.charAt(i);
-    		if (guessch == currentch) {
-    			blankPhrase = blankPhrase.substring(0, i) + guessch + blankPhrase.substring(i + 1); // Replaces the spaces with the user's guessed letter.
-    			canvas.displayLetters(guessch);
-    		}
-		}
-		if (blankPhrase.indexOf(guessch) != -1) {
-			println("That guess is correct.");
-			canvas.updateBalance(currentPlayer.getBalance(), currentPlayerNumber()); //Displays the player's new balance.
-		} else {
-			println("There are no " + guessch + "'s in the phrase.");
-			if (! isVowel(guess)) currentPlayer.changeBalance(-canvas.getWedgeValue()); //Only decreases the player's balance to its former value if the guess was a consonant.
-			isCurrentPlayerTurn = false;
-		}
-		canvas.removeLetter(guessch); //Removes the letter from the remaining letters of the alphabet on display.
-    }
+//    private void trackPlayerGuess(String guess) {
+//    	char guessch = Character.toLowerCase(guess.charAt(0));
+//    	playerGuesses += guessch;
+//		for (int i = 0; i < phrase.length(); i++) {
+//    		char currentch = phrase.charAt(i);
+//    		if (guessch == currentch) {
+//    			blankPhrase = blankPhrase.substring(0, i) + guessch + blankPhrase.substring(i + 1); // Replaces the spaces with the user's guessed letter.
+//    			canvas.displayLetters(guessch);
+//    		}
+//		}
+//		if (blankPhrase.indexOf(guessch) != -1) {
+//			println("That guess is correct.");
+//			canvas.updateBalance(currentPlayer.getBalance(), currentPlayerNumber()); //Displays the player's new balance.
+//		} else {
+//			println("There are no " + guessch + "'s in the phrase.");
+//			if (! isVowel(guess)) currentPlayer.changeBalance(-canvas.getWedgeValue()); //Only decreases the player's balance to its former value if the guess was a consonant.
+//			isCurrentPlayerTurn = false;
+//		}
+//		canvas.removeLetter(guessch); //Removes the letter from the remaining letters of the alphabet on display.
+//    }
 	
 	public static void setCharArray()
 	{
