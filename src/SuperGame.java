@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class SuperGame extends Difficulty
+public class SuperGame
 {
 	public static void main(String[] args) throws Exception
 	{
@@ -31,10 +31,11 @@ public class SuperGame extends Difficulty
 		System.out.println("What's your name sparky?");
 		name = scnr.nextLine();
 		player.setName(name);
-
-		System.out.println("Select the level of difficulty you would like to play, enter 1 for 'easy', enter 2 for 'normal', enter 3 for 'hard': ");
-		difficulty = scnr.nextInt(); //Perfect place to handle an exception incase user enters "easy" 
-		player.setDifficulty(difficulty); 
+		
+		//STAGES IMPLEMENTED HERE
+		System.out.println("Alright sparky, er " + name + " lets go");
+		play.setFunds();
+		player.setStage(); 
 				
 		// Returns the difficulty chosen
 		player.getDifficulty();

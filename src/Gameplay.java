@@ -3,7 +3,7 @@ import java.util.*;
 
 //NEED TRACKGUESS METHOD
 
-public class Gameplay extends Difficulty 
+public class Gameplay implements Difficulty
 {
 
 	//Find different files for each difficulty phrase 
@@ -164,7 +164,7 @@ public class Gameplay extends Difficulty
 			char currentCh = chosenPhrase.charAt(i);
 			
 			
-			if(raChar.get(i).equals(chosenChar))
+			while(raChar.get(i).equals(chosenChar))
 			{
 				instance++;
 				letterFound = true;
