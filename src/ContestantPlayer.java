@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class ContestantPlayer 
+public class ContestantPlayer extends Difficulty
 {
 
 	
