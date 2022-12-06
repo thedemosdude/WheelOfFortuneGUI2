@@ -1,7 +1,9 @@
 import java.io.*;
 import java.util.*;
 
-public class Gameplay 
+//NEED TRACKGUESS METHOD
+
+public class Gameplay implements Difficulty
 {
 
 	//Find different files for each difficulty phrase 
@@ -12,13 +14,12 @@ public class Gameplay
 	private static String chosenPhrase;
 	private String showCurrentPhrase;
 
-	private char instanceChar = 'a';
-	
-	//booleans related to player choosing to guess
-	//more booleans for if they choose to use a letter
-	private boolean letterFound = false;
-	private boolean chooseGuess = false;
-	private boolean chooseLetter = false;
+//	
+//	//booleans related to player choosing to guess
+//	//more booleans for if they choose to use a letter
+//	private boolean letterFound = false;
+//	private boolean chooseGuess = false;
+//	private boolean chooseLetter = false;
 
 
 	List<String> listOfStrings = new ArrayList<String>();
@@ -26,19 +27,28 @@ public class Gameplay
 	//Arraylist of char, used to be an array but this makes it easier to use across methods 
 	//since we dont know how long our array is till spin is called
 	private static List<Character> raChar = new ArrayList<Character>();
-
+	
+	//char block
+	//work later brought over from contestant player
+	public static char[] alphabet = new char[26];
+	public static int[] charValues = new int[26];
+	public static int charValue = 0;
+	//different char stuff for instance of a char
+	private char instanceChar = 'a';
 	
 	//File IO declaration goes here
+	//work later file IO needs extra code for 3 different phrase files depending on difficulty
+	//somehow call whichDifficulty method from difficulty superclass
 	File phrases = new File("easyPhrases.txt");
 	
 	private int[] raValue = new int[37];
 
-
-	
 	private Random rand = new Random();
 	
 	
-	public String spin() throws Exception 
+	
+	// Write other two difficulty.txt files and add to setPhrase 
+	public String setPhrase() throws Exception 
 	{
 		
 		 
@@ -57,9 +67,7 @@ public class Gameplay
 		
 		
 		//file we are using has 37 phrases
-		//if we implement stages we will need to add extra code
-		//extra code would find the length (amount of phrases) in the file and in
-		//rand.nextint(numPhrasesinfile)
+		//if we implement stages we will need to add extra code -- NEED TO DO 
 		int index = rand.nextInt(37);
 
 		//sets our phrase from array to a variable
@@ -72,39 +80,42 @@ public class Gameplay
 		return chosenPhrase;
 		//array of values need to be assigned to each index
 		//raValue needs to be populated with values for each phrase
-		//we might need to look at the file and manually think of a value per phrase
-	
-		
-		
+		//we might need to look at the file and manually think of a value per phrase		
 	}
-	// hey
-	/* Method: trackPlayerGuess */
-	/** 
-	 *  Determines if the inputted letter is in the phrase. If so, displays the letter and the user's new balance.
-	 * 	If not, ends the turn.
-	 *  @param	guess	user inputted String
-	 */
-    private void trackPlayerGuess(String guess) {
-    	char guessch = Character.toLowerCase(guess.charAt(0));
-    	playerGuesses += guessch;
-		for (int i = 0; i < phrase.length(); i++) {
-    		char currentch = phrase.charAt(i);
-    		if (guessch == currentch) {
-    			blankPhrase = blankPhrase.substring(0, i) + guessch + blankPhrase.substring(i + 1); // Replaces the spaces with the user's guessed letter.
-    			canvas.displayLetters(guessch);
-    		}
-		}
-		if (blankPhrase.indexOf(guessch) != -1) {
-			println("That guess is correct.");
-			canvas.updateBalance(currentPlayer.getBalance(), currentPlayerNumber()); //Displays the player's new balance.
-		} else {
-			println("There are no " + guessch + "'s in the phrase.");
-			if (! isVowel(guess)) currentPlayer.changeBalance(-canvas.getWedgeValue()); //Only decreases the player's balance to its former value if the guess was a consonant.
-			isCurrentPlayerTurn = false;
-		}
-		canvas.removeLetter(guessch); //Removes the letter from the remaining letters of the alphabet on display.
-    }
 	
+	public void setCharRa()
+	{
+		alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();		
+	}
+	
+	public char[] getCharRa()
+	{
+		return alphabet;
+	}
+	public void setCharValueRa()
+	{
+		//normal letters 2 and vowels 1
+		//each have to return to same value variable
+		for(int i = 0; i < charValues.length; i++)
+		{
+			if((alphabet[i] == 'a') || (alphabet[i] == 'e') ||
+			 (alphabet[i] == 'i') || (alphabet[i] == 'o') || (alphabet[i] == 'u'))//and sometimes y!
+			{
+				charValues[i] = 100;
+				charValue = charValues[i];
+			}
+			else
+			{
+				charValues[i] = 500;
+				charValue = charValues[i];
+			}
+		}
+	}
+	//not good
+	public int[] getCharValueRa()
+	{
+		return charValues;
+	}
 	public static void setCharArray()
 	{
 		
@@ -153,7 +164,7 @@ public class Gameplay
 			char currentCh = chosenPhrase.charAt(i);
 			
 			
-			if(raChar.get(i).equals(chosenChar))
+			while(raChar.get(i).equals(chosenChar))
 			{
 				instance++;
 				letterFound = true;
@@ -164,7 +175,7 @@ public class Gameplay
 		if(letterFound == false)
 			{
 				System.out.println("'" + chosenChar + "' didn't show up. Try again!");
-				ContestantPlayer.wrongLetter();
+				//ContestantPlayer.wrongLetter();
 			}
 		else
 		{
@@ -198,6 +209,91 @@ public class Gameplay
 		//since we have 2 options we can do this
 		return chosen;
 	}
+	public void rightLetter()
+	{
+		//Instance variable for number of correct letters goes here 
+		if(setDiffString.equals("Easy"))
+		 {
+			if(charValue == 100)
+			 funds = charValue + 1000; 
+		 }
+		 
+		 else if(setDiffString.equals("Normal"))
+		 {
+			 funds = charValue + 2500; 
+		 }
+		 
+		 else
+		 {
+			 funds = charValue + 5000; 
+		 } 
+	}
+	
+	public static void wrongLetter()
+	{
+		if(setDiffString.equals("Easy"))
+		 {
+		
+			 funds = charValue - 1000; 
+		 }
+		 
+		 else if(setDiffString.equals("Normal"))
+		 {
+	
+			 funds = charValue - 2500; 
+		 }
+		 
+		 else
+		 {
+			 funds = charValue - 5000; //value of letter (out of 26)
+		 }
+		 	
+	}
+	
+	
+	
+	public void guessRight()
+	{
+		//addFunds for correct guess based on difficulty selection
+		if(setDiffString.equals("Easy"))
+		 {
+			
+			 funds = charValue + 1000; 
+		 }
+		 
+		 else if(setDiffString.equals("Normal"))
+		 {
+	
+			 funds = charValue + 2500; 
+		 }
+		 
+		 else
+		 {
+			 funds = charValue + 5000; 
+		 } 
+
+		
+	}
+	public void guessWrong()
+	{
+		//addFunds for wrong guess based on difficulty selection
+		if(setDiffString.equals("Easy"))
+		 {
+			
+			 funds = charValue + 1000; 
+		 }
+		 
+		 else if(setDiffString.equals("Normal"))
+		 {
+	
+			 funds = charValue + 2500; 
+		 }
+		 
+		 else
+		 {
+			 funds = charValue + 5000; 
+		 } 
+	} 
 	
 	public static String hide(String word) 
 	{

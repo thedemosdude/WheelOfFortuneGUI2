@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class SuperGame 
+public class SuperGame
 {
 	public static void main(String[] args) throws Exception
 	{
@@ -9,7 +9,7 @@ public class SuperGame
 		String diffString = "";
 		String userChoice = "";
 		String fullGuess = "";
-		String chosenWord = "";
+		String chosenPhrase = "";
 		boolean guess = false;
 		boolean found = false;
 		boolean spin = false;
@@ -19,12 +19,10 @@ public class SuperGame
 		char charChosen;
 		
 
-		
+		//Player and game object declarations
 		ContestantPlayer player = new ContestantPlayer();
-		Gameplay wheel = new Gameplay();
-		
-		
-		
+		Gameplay game = new Gameplay();
+				
 		Scanner scnr = new Scanner(System.in);
 		
 		System.out.println("Hey whats good, heres whats up. We got some Wheel of fortune stuff but our own spin");
@@ -33,10 +31,11 @@ public class SuperGame
 		System.out.println("What's your name sparky?");
 		name = scnr.nextLine();
 		player.setName(name);
-
-		System.out.println("Select the level of difficulty you would like to play, enter 1 for 'easy', enter 2 for 'normal', enter 3 for 'hard': ");
-		difficulty = scnr.nextInt(); //Perfect place to handle an exception incase user enters "easy" 
-		player.setDifficulty(difficulty); 
+		
+		//STAGES IMPLEMENTED HERE
+		System.out.println("Alright sparky, er " + name + " lets go");
+		play.setFunds();
+		player.setStage(); 
 				
 		// Returns the difficulty chosen
 		player.getDifficulty();
@@ -56,10 +55,10 @@ public class SuperGame
 		
 		//this will access our file. Phrase and Value for it is set
 	
-		chosenWord = wheel.spin();
+		chosenPhrase = game.setPhrase();
 		Gameplay.setCharArray();
 		System.out.println("hidden should show up");
-		System.out.println(Gameplay.hide(chosenWord));
+		System.out.println(Gameplay.hide(chosenPhrase));
 		// the first option is to guess the entire phrase.
 		// Depending on the difficulty, guessing the entire
 		
@@ -89,8 +88,6 @@ public class SuperGame
 				userChoice = scnr.nextLine(); 
 				
 				isLetter = Gameplay.guessOrLetter(userChoice);
-				
-				player.rightLetter();
 					
 			}
 			else
