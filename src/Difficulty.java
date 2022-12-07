@@ -2,13 +2,13 @@ import java.io.*;
 
 interface Difficulty
 {
-	void setFunds(int newFunds);
+	void setFunds();
 	
 	int getFunds();
 
-	void setStage(int diff);
+	void setStage();
 	
-	String getStage();
+	int getStage();
 	
 	
 }

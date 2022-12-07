@@ -34,11 +34,20 @@ public class SuperGame
 		
 		//STAGES IMPLEMENTED HERE
 		System.out.println("Alright sparky, er " + name + " lets go");
-		play.setFunds();
-		player.setStage(); 
-				
+		
+		//Start of the game, gameplay funds are set. funds is set here. player funds are updated. Funds are essentially set everywhere. 
+		//Encapsulatin essentially.
+		NewGameplay.setFunds();
+		funds = NewGameplay.getFunds();
+		player.setFunds(funds);
+		//player.setStage(); 
+		
+		
+		funds = player.getFunds();
+		NewGameplay.buyVowel(funds);
+		
 		// Returns the difficulty chosen
-		player.getDifficulty();
+		player.getStage();
 
 		// lets start the game!
 		// boolean flag in main- pass over to contestantPlayer class. boolean method is isGameRunning

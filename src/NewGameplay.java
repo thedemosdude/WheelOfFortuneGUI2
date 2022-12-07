@@ -2,16 +2,21 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
-public class NewGameplay
+public class NewGameplay 
 {
+	private int m = 0;
 	private int value = 0;
 	private String chosenPhrase; 
 	private String playerGuesses;
-	private int funds;
+	private static int funds;
 	private static final int VOWEL_COST = 250;
+	private static int stage;
 	
-	//Lo2
+	ContestantPlayer player = new ContestantPlayer();
+	
+	//Learning Outcome 2
 	List<String> listOfStrings = new ArrayList<String>();
 	
 	//Arraylist of char, used to be an array but this makes it easier to use across methods 
@@ -20,7 +25,7 @@ public class NewGameplay
 	
 	//char block
 	//work later brought over from contestant player
-	public static char[] alphabet = new char[26];
+	public char[] alphabet = new char[26];
 	public static int[] charValues = new int[26];
 	public static int charValue = 0;
 	
@@ -38,7 +43,7 @@ public class NewGameplay
 	 *  @return true if vowel, otherwise false.
 	 */
 	 
-	//Learning outcome for exception handling
+	//Learning outcome for exception handling - must improve
 	public String setPhrase() throws Exception 
 	{
 		
@@ -114,14 +119,59 @@ public class NewGameplay
     	}
     }
     
+    /* Method: guessConsonant */
+	/** Prompts the user to enter a letter until a consonant is entered. */
+	private void guessConsonant() {
+		while(true) {
+			String guess = readLine("Your guess: ");
+			if (isLegalGuess(guess) && ! isVowel(guess)) {
+				trackPlayerGuess(guess);
+				return;
+			} else if (guess.length() == 1 && isVowel(guess)){
+				System.out.println("Please enter a consonant.");
+	    	}
+		}
+	}
+	
+    /* Method: trackPlayerGuess */
+	/** 
+	 *  Determines if the inputted letter is in the phrase. If so, displays the letter and the user's new balance.
+	 * 	If not, ends the turn.
+	 *  @param	guess	user inputted String
+	 */
+    private void trackPlayerGuess(String guess) {
+    	char guessch = Character.toUpperCase(guess.charAt(0));
+    	playerGuesses += guessch;
+		for (int i = 0; i < phrase.length(); i++) {
+    		char currentch = phrase.charAt(i);
+    		if (guessch == currentch) {
+    			blankPhrase = blankPhrase.substring(0, i) + guessch + blankPhrase.substring(i + 1); // Replaces the spaces with the user's guessed letter.
+    			canvas.displayLetters(guessch);
+    		}
+		}
+		if (blankPhrase.indexOf(guessch) != -1) {
+			println("That guess is correct.");
+			canvas.updateBalance(currentPlayer.getBalance(), currentPlayerNumber()); //Displays the player's new balance.
+		} else {
+			println("There are no " + guessch + "'s in the phrase.");
+			if (! isVowel(guess)) currentPlayer.changeBalance(-canvas.getWedgeValue()); //Only decreases the player's balance to its former value if the guess was a consonant.
+			isCurrentPlayerTurn = false;
+		}
+		canvas.removeLetter(guessch); //Removes the letter from the remaining letters of the alphabet on display.
+    }
+    
     /* Method: buyVowel */
 	/** Runs through the vowel buying option */
-	private void buyVowel() {
-		if (currentPlayer.getBalance() >= VOWEL_COST) {
-			currentPlayer.changeBalance(-VOWEL_COST); // Charges the player the cost of the vowel.
-			canvas.updateBalance(currentPlayer.getBalance(), currentPlayerNumber());
+	public static int buyVowel(int balance) 
+	{
+		funds = balance;
+		
+		if (funds >= VOWEL_COST) {
+			funds -= VOWEL_COST; // Charges the player the cost of the vowel.
+		//GUI update later	canvas.updateBalance(currentPlayer.getBalance(), currentPlayerNumber());
 			while(true) { // Prompts user to enter a letter until a vowel is entered.
-				String guess = readLine("Enter vowel: ");
+				System.out.println("Enter vowel: ");
+				String guess = sc.nextLine();
 				if (isLegalGuess(guess) && isVowel(guess)) {
 					trackPlayerGuess(guess);
 					return;
@@ -132,29 +182,36 @@ public class NewGameplay
 		} else {
 			System.out.println("You cannot afford to buy a vowel."); // If player's balance is too low, does not let the player buy a vowel.
 		}
+		return funds;
 	}
 	
+
 	//INTERFACE SECTION__________________
-	public int changeFunds(int newFunds)
+	// public int changeFunds(int newFunds)
+
+	
+	//********INTERFACE SECTION**********
+	//Our Setters are different however our getters remain the same. Here they set
+	//Sets our funds initially to 1000 
+	public static void setFunds()
 	{
-		funds += newFunds;
+		funds = 1000;
+		System.out.println("Congrats you get 1000 just for starting the game!");
+	}
+	//traditional getter
+	public static int getFunds()
+	{
 		return funds;
-		//this is a fund updater
 	}
-	public int getFunds()
+	//Sets our first stage. Nothing more
+	public void setStage()
 	{
-		return funds;
-		//operates the same as contestant player
-	}
-	
-	public void setStage(int diff)
+		stage = 0;
+	} 
+
+	//Traditional getter
+	public static int getStage()
 	{
-		//operates different stages 2-3
+		return stage;
 	}
-	
-	public String getStage();
-	{
-		//operates the same as contesntant
-	}
-	
 }
