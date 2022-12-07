@@ -133,6 +133,7 @@ public class NewGameplay
 			System.out.println("You cannot afford to buy a vowel."); // If player's balance is too low, does not let the player buy a vowel.
 		}
 	}
+	
 	//INTERFACE SECTION__________________
 	public int changeFunds(int newFunds)
 	{

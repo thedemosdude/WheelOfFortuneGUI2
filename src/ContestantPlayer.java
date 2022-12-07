@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class ContestantPlayer implements Difficulty
+public abstract class ContestantPlayer implements Difficulty
 {
 	//setStage and getStage method needed
 	//
