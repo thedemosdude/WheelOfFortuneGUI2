@@ -5,13 +5,14 @@ import java.util.Random;
 
 public class NewGameplay
 {
-	private int value = 0;
+	private int    m  = 0;
 	private String chosenPhrase; 
 	private String playerGuesses;
-	private int funds;
+	private static int funds;
 	private static final int VOWEL_COST = 250;
+	private static int stage;
 	
-	//Lo2
+	//Learning Outcome 2
 	List<String> listOfStrings = new ArrayList<String>();
 	
 	//Arraylist of char, used to be an array but this makes it easier to use across methods 
@@ -38,7 +39,7 @@ public class NewGameplay
 	 *  @return true if vowel, otherwise false.
 	 */
 	 
-	//Learning outcome for exception handling
+	//Learning outcome for exception handling - must improve
 	public String setPhrase() throws Exception 
 	{
 		
@@ -133,27 +134,30 @@ public class NewGameplay
 			System.out.println("You cannot afford to buy a vowel."); // If player's balance is too low, does not let the player buy a vowel.
 		}
 	}
-	//INTERFACE SECTION__________________
-	public int changeFunds(int newFunds)
+	
+	
+	//********INTERFACE SECTION**********
+	//Our Setters are different however our getters remain the same. Here they set
+	//Sets our funds initially to 1000 
+	public static void setFunds()
 	{
-		funds += newFunds;
+		funds = 1000;
+		System.out.println("Congrats you get 1000 just for starting the game!");
+	}
+	//traditional getter
+	public static int getFunds()
+	{
 		return funds;
-		//this is a fund updater
 	}
-	public int getFunds()
+	//Sets our first stage. Nothing more
+	public void setStage()
 	{
-		return funds;
-		//operates the same as contestant player
-	}
-	
-	public void setStage(int diff)
+		stage = 0;
+	} 
+
+	//Traditional getter
+	public static int getStage()
 	{
-		//operates different stages 2-3
+		return stage;
 	}
-	
-	public String getStage();
-	{
-		//operates the same as contesntant
-	}
-	
 }
