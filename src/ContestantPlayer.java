@@ -43,7 +43,7 @@ public class ContestantPlayer implements Difficulty
 	//sets to stage 1- must do something. in NewgamePlay FileIO is set
 	public void setStage()
 	{
-		
+		stage = 0;
 	} 
 		 
 //		 numDifficulty = diff;
